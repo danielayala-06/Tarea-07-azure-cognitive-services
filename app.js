@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const { analizarSentimientos } = require('./app/text-analizer')
+const { leerTexto } = require('./app/ocr')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -17,6 +18,10 @@ app.get('/sentimientos', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'views', 'lnp.html'))
 })
 
+app.get('/ocr', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'views', 'ocr.html'))
+})
+
 app.post('/api/analizar', async (req, res) => {
     const { texto } = req.body
 
@@ -26,6 +31,21 @@ app.post('/api/analizar', async (req, res) => {
 
     try {
         const resultado = await analizarSentimientos(texto.trim())
+        res.json({ resultado })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
+app.post('/api/ocr', async (req, res) => {
+    const { url } = req.body
+
+    if (!url || typeof url !== 'string' || url.trim().length === 0) {
+        return res.status(400).json({ error: 'Debes enviar una URL de imagen.' })
+    }
+
+    try {
+        const resultado = await leerTexto(url.trim())
         res.json({ resultado })
     } catch (error) {
         res.status(500).json({ error: error.message })

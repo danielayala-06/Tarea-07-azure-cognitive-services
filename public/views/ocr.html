@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR - Reconocimiento de texto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="text-center mb-4">
+                    <a href="/" class="btn btn-sm btn-outline-secondary mb-3">
+                        <i class="bi bi-arrow-left me-1"></i>Volver
+                    </a>
+                    <h2 class="fw-bold">Reconocimiento de texto (OCR)</h2>
+                    <p class="text-muted">Ingresa la URL de una imagen para extraer su texto</p>
+                </div>
+
+                <!-- Formulario -->
+                <div class="card bg-body-tertiary shadow border-0 mb-4">
+                    <div class="card-body p-4">
+
+                        <label class="form-label fw-semibold">URL de la imagen</label>
+                        <input
+                            id="input-url"
+                            type="url"
+                            class="form-control mb-3"
+                            placeholder="https://ejemplo.com/imagen.jpg"
+                        />
+
+                        <hr>
+
+                        <button id="btn-analizar" class="btn btn-primary w-100 py-2 fw-semibold">
+                            <i class="bi bi-image me-2"></i>Extraer texto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading" class="text-center py-4 d-none">
+                    <p class="text-muted">Procesando imagen en Azure...</p>
+                </div>
+
+                <!-- Error -->
+                <div id="error-box" class="alert alert-danger d-none" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="error-msg"></span>
+                </div>
+
+                <!-- Resultado -->
+                <div id="resultados" class="d-none">
+                    <h5 class="fw-bold mb-3">Texto detectado</h5>
+                    <div class="card border-0 shadow bg-body-tertiary">
+                        <div class="card-body">
+                            <pre id="texto-resultado" class="mb-0 text-wrap" style="white-space: pre-wrap;"></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/api/ocr.js"></script>
+    <script src="/js/ocr-ui.js"></script>
+</body>
+</html>
